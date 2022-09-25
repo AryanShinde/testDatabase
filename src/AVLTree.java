@@ -99,11 +99,48 @@ public class AVLTree {
 
     }
 
+    static int minValue(Node root){
+        int min = root.id;
+        while(root.left!=null){
+            min = root.left.id;
+            root = root.left;
+        }
+        return min;
+    }
+
+    static Node delete(Node root,int key){
+
+        if(root==null){
+            return root;
+        }
+
+        if(key<root.id){
+            root.left = delete(root.left,key);
+        }else if(key > root.id){
+            root.right = delete(root.right,key);
+        }else{
+
+            if(root.left==null) return root.right;
+            else if(root.right==null) return root.left;
+
+            root.id = minValue(root.right);
+
+            root.right = delete(root.right,root.id);
+        }
+
+        return root;
+    }
+
+
     public void printTree1(Node2 root){
         if(root==null){
             return;
         }
         System.out.println(root.data);
+        System.out.println(root.id);
+        System.out.println(root.name);
+        System.out.println(root.height);
+        System.out.println();
         printTree1((Node2)root.left);
         printTree1((Node2)root.right);
 
@@ -173,18 +210,33 @@ public class AVLTree {
 
     public static void main(String[] args) {
         AVLTree tree = new AVLTree();
-//        tree.root = tree.insert(tree.root, 5, 2, "aryan","",-1);
 //        tree.root = tree.insert(tree.root, 10, 3, "shinde","",-1);
+//        tree.root = tree.insert(tree.root, 5, 2, "aryan","",-1);
 //        tree.root = tree.insert(tree.root, 15, 4, "bruh","",-1);
-//
-//
+////
+//////
 //        System.out.println("before serializing");
 //        tree.printTree1((Node2)tree.root);
-
+////
 //        tree.serializeData(tree.root);
 //        System.out.println("after serializing");
-        tree.root=tree.decerializeData();
-        tree.printTree1((Node2)tree.root);
+//        tree.root=tree.decerializeData();
+//        tree.printTree1((Node2)tree.root);
+//
+//        tree.root = tree.delete(tree.root,2);
+////
+////
+//        System.out.println("AFTER");
+//        tree.printTree1((Node2)tree.root);
+//        System.out.println();
+////
+//        System.out.println("AGAIN SERIALIZING");
+//        tree.serializeData(tree.root);
+//
+//        System.out.println("DESERIALZING");
+//        tree.root=tree.decerializeData();
+//        tree.printTree1((Node2)tree.root);
+
 
 
 //        System.out.println("dgbd\n\n");
